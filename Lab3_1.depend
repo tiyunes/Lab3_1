@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1633620173 source:c:\users\yunes\documents\c++\lab3_1\main.cpp
+1633960638 source:c:\users\yunes\documents\c++\lab3_1\main.cpp
 	<iostream>
 	<functional>
 	<utility>
@@ -24,7 +24,7 @@
 
 1631698156 c:\users\yunes\documents\c++\lab3_1\dynamicarray.h
 
-1631686143 c:\users\yunes\documents\c++\lab3_1\bubblesort.h
+1633882208 c:\users\yunes\documents\c++\lab3_1\bubblesort.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
@@ -50,7 +50,7 @@
 	"SEQUENCE.H"
 	"LinkedList.h"
 
-1631808387 c:\users\yunes\documents\c++\lab3_1\mergesort.h
+1633887382 c:\users\yunes\documents\c++\lab3_1\mergesort.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
@@ -60,7 +60,7 @@
 	"ArraySequence.h"
 	<functional>
 
-1633620468 c:\users\yunes\documents\c++\lab3_1\tests.h
+1633959722 c:\users\yunes\documents\c++\lab3_1\tests.h
 	<functional>
 	<utility>
 	"BubbleSort.h"
@@ -71,7 +71,7 @@
 	<cassert>
 	<cmath>
 
-1633613569 c:\users\yunes\documents\c++\lab3_1\benchmark.h
+1633960608 c:\users\yunes\documents\c++\lab3_1\benchmark.h
 	<chrono>
 	<fstream>
 	<iostream>

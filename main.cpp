@@ -12,8 +12,6 @@
 #include "benchmark.h"
 #include <cmath>
 
-//const double EPS = 0.0001;
-
 
 using namespace std;
 

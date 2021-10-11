@@ -51,13 +51,6 @@ void testInt (function<bool(int, int)> compInt)
     Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(7);
     sSort1 = BubbleSort(s1, compInt);
 
-    /*
-    for (int i = 0; i < sSort1->GetLength(); i++)
-    {
-        cout << sSort1->Get(i) << endl;
-    }
-    */
-
     Sequence<int>* sSort2 = (Sequence<int>*)new ArraySequence<int>(7);
     sSort2 = InsertionSort(s1, compInt);
 
@@ -151,13 +144,6 @@ void testDouble (function<bool(double, double)> compDouble)
 
     Sequence<double>* sSort1 = (Sequence<double>*)new ArraySequence<double>(9);
     sSort1 = BubbleSort(s1, compDouble);
-
-    /*
-    for (int i = 0; i < sSort1->GetLength(); i++)
-    {
-        cout << sSort1->Get(i) << endl;
-    }
-    */
 
     Sequence<double>* sSort2 = (Sequence<double>*)new ArraySequence<double>(9);
     sSort2 = InsertionSort(s1, compDouble);
@@ -258,13 +244,6 @@ void testChar (function<bool(char, char)> compChar)
 
     Sequence<char>* sSort1 = (Sequence<char>*)new ArraySequence<char>(8);
     sSort1 = BubbleSort(s1, compChar);
-
-    /*
-    for (int i = 0; i < sSort1->GetLength(); i++)
-    {
-        cout << sSort1->Get(i) << endl;
-    }
-    */
 
     Sequence<char>* sSort2 = (Sequence<char>*)new ArraySequence<char>(8);
     sSort2 = InsertionSort(s1, compChar);

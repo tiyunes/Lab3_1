@@ -15,13 +15,13 @@ Sequence<T>* BubbleSort(Sequence<T>* s, function<bool(T, T)> cmp)
     T buff;
     for(int i = 0; i < (sortedSequence->GetLength() - 1); i++)
     {
-        for(int j = 0; j < (sortedSequence->GetLength() - i - 1); j++)
+        for(int j = (sortedSequence->GetLength() - 1); j > i; j--)
         {
-            if(!(cmp(sortedSequence->Get(j), sortedSequence->Get(j+1))))
+            if(!(cmp(sortedSequence->Get(j - 1), sortedSequence->Get(j))))
             {
-                buff = sortedSequence->Get(j);
-                sortedSequence->Set(j, sortedSequence->Get(j+1));
-                sortedSequence->Set(j + 1, buff);
+                buff = sortedSequence->Get(j - 1);
+                sortedSequence->Set((j - 1), sortedSequence->Get(j));
+                sortedSequence->Set(j, buff);
             }
         }
     }

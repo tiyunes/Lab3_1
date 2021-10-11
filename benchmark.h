@@ -15,7 +15,8 @@
 #include "MergeSort.h"
 #include "QuickSort.h"
 
-int size[9] = {1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000};
+const int n = 9;
+int size[n] = {1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000};
 
 using namespace std;
 
@@ -38,7 +39,7 @@ void RandomBenchmark()
     //Sequence<pair<int, int>>* sRand2 = (Sequence<pair<int, int>>*) new ArraySequence<pair<int, int>>();
     pair<int, int> p;
     int r;
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         sRand.push_back((Sequence<int>*)new ArraySequence<int>(size[i]));
         sRand2.push_back((Sequence<pair<int, int>>*)new ArraySequence<int>(size[i]));
@@ -51,8 +52,7 @@ void RandomBenchmark()
         }
     }
     ofstream fout("time.csv");
-    //ofstream fout("text.txt");
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>(size[i]);
         Sequence<int>* s2 = (Sequence<int>*)new ArraySequence<int>(size[i]);
@@ -101,7 +101,7 @@ void SortedBenchmark()
     vector<Sequence<pair<int, int>>*> v2;
     pair<int, int> p;
     int r;
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         v1.push_back((Sequence<int>*)new ArraySequence<int>(size[i]));
         v2.push_back((Sequence<pair<int, int>>*)new ArraySequence<int>(size[i]));
@@ -113,7 +113,7 @@ void SortedBenchmark()
         }
     }
     ofstream fout("timeSorted.csv");
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>(size[i]);
         Sequence<int>* s2 = (Sequence<int>*)new ArraySequence<int>(size[i]);
@@ -162,7 +162,7 @@ void ReverseBenchmark()
     vector<Sequence<pair<int, int>>*> v2;
     pair<int, int> p;
     int r;
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         v1.push_back((Sequence<int>*)new ArraySequence<int>(size[i]));
         v2.push_back((Sequence<pair<int, int>>*)new ArraySequence<int>(size[i]));
@@ -174,7 +174,7 @@ void ReverseBenchmark()
         }
     }
     ofstream fout("timeReverse.csv");
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < n; i++)
     {
         Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>(size[i]);
         Sequence<int>* s2 = (Sequence<int>*)new ArraySequence<int>(size[i]);

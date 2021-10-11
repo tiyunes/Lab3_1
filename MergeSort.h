@@ -58,6 +58,7 @@ void MergeSortH(Sequence<T>* s, function<bool(T, T)> cmp)
     {
         s->Set(i, bufferSequence->Get(i));
     }
+    delete[] bufferSequence;
 }
 
 template<typename T>
@@ -114,6 +115,7 @@ Sequence<T>* MergeSort(Sequence<T>* s, function<bool(T, T)> cmp)
     {
         sortedSequence->Set(i, bufferSequence->Get(i));
     }
+    delete[] bufferSequence;
     return sortedSequence;
 }
 
