@@ -4,6 +4,7 @@
 #include "SEQUENCE.H"
 #include "LinkedList.h"
 #include "LinkedListSequence.h"
+#include "ArraySequence.h"
 #include <functional>
 #include <set>
 
@@ -25,14 +26,15 @@ Sequence<T>* CountingSort(Sequence<pair<T, int>>* s, int maxKey)
     Sequence<T>* sortedSequence = (Sequence<T>*) new LinkedListSequence<T>(s->GetLength());
     for (set<int>::const_iterator it = keys.begin(); it != keys.end(); ++it)
     {
-        LinkedList<T>* pointer = new LinkedList<T>((countingList->GetP(*it))->GetLength());
-        pointer = countingList->GetP(*it);
-        for (int j = 0; j < pointer->GetLength(); j++)
+        //LinkedList<T>* pointer = new LinkedList<T>((countingList->GetP(*it))->GetLength());
+        //pointer = countingList->GetP(*it);
+        for (int j = 0; j < (countingList->GetP(*it))->GetLength(); j++)
         {
-            sortedSequence->Set(sequenceIndex, pointer->Get(j));
+            sortedSequence->Set(sequenceIndex, (countingList->GetP(*it))->Get(j));
             sequenceIndex++;
         }
     }
+    delete[] countingList;
     return sortedSequence;
 }
 

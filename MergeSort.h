@@ -23,7 +23,7 @@ void MergeSortH(Sequence<T>* s, function<bool(T, T)> cmp)
     MergeSortH(leftSequence, cmp);
     MergeSortH(rightSequence, cmp);
 
-    Sequence<T>* bufferSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
+    //Sequence<T>* bufferSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
     int left_i = 0;
     int right_i = 0;
     int buffer_i = 0;
@@ -31,40 +31,40 @@ void MergeSortH(Sequence<T>* s, function<bool(T, T)> cmp)
     {
         if (cmp(leftSequence->Get(left_i), rightSequence->Get(right_i)))
         {
-            bufferSequence->Set(buffer_i, leftSequence->Get(left_i));
+            s->Set(buffer_i, leftSequence->Get(left_i));
             left_i++;
             buffer_i++;
         }
         else
         {
-            bufferSequence->Set(buffer_i, rightSequence->Get(right_i));
+            s->Set(buffer_i, rightSequence->Get(right_i));
             right_i++;
             buffer_i++;
         }
     }
     while (left_i < middle)
     {
-        bufferSequence->Set(buffer_i, leftSequence->Get(left_i));
+        s->Set(buffer_i, leftSequence->Get(left_i));
         left_i++;
         buffer_i++;
     }
     while (right_i < (s->GetLength() - middle))
     {
-        bufferSequence->Set(buffer_i, rightSequence->Get(right_i));
+        s->Set(buffer_i, rightSequence->Get(right_i));
         right_i++;
         buffer_i++;
     }
     for (int i = 0; i < s->GetLength(); i++)
     {
-        s->Set(i, bufferSequence->Get(i));
+        s->Set(i, s->Get(i));
     }
-    delete[] bufferSequence;
+    //delete[] bufferSequence;
 }
 
 template<typename T>
 Sequence<T>* MergeSort(Sequence<T>* s, function<bool(T, T)> cmp)
 {
-    Sequence<T>* sortedSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
+    //Sequence<T>* sortedSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
     int middle = s->GetLength() / 2;
     Sequence<T>* leftSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength() / 2);
     for (int i = 0; i < (s->GetLength() / 2); i++)
@@ -80,7 +80,7 @@ Sequence<T>* MergeSort(Sequence<T>* s, function<bool(T, T)> cmp)
     MergeSortH(leftSequence, cmp);
     MergeSortH(rightSequence, cmp);
 
-    Sequence<T>* bufferSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
+    //Sequence<T>* bufferSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
     int left_i = 0;
     int right_i = 0;
     int buffer_i = 0;
@@ -88,35 +88,33 @@ Sequence<T>* MergeSort(Sequence<T>* s, function<bool(T, T)> cmp)
     {
         if (cmp(leftSequence->Get(left_i), rightSequence->Get(right_i)))
         {
-            bufferSequence->Set(buffer_i, leftSequence->Get(left_i));
+            s->Set(buffer_i, leftSequence->Get(left_i));
             left_i++;
             buffer_i++;
         }
         else
         {
-            bufferSequence->Set(buffer_i, rightSequence->Get(right_i));
+            s->Set(buffer_i, rightSequence->Get(right_i));
             right_i++;
             buffer_i++;
         }
     }
     while (left_i < middle)
     {
-        bufferSequence->Set(buffer_i, leftSequence->Get(left_i));
+        s->Set(buffer_i, leftSequence->Get(left_i));
         left_i++;
         buffer_i++;
     }
     while (right_i < (s->GetLength() - middle))
     {
-        bufferSequence->Set(buffer_i, rightSequence->Get(right_i));
+        s->Set(buffer_i, rightSequence->Get(right_i));
         right_i++;
         buffer_i++;
     }
-    for (int i = 0; i < s->GetLength(); i++)
-    {
-        sortedSequence->Set(i, bufferSequence->Get(i));
-    }
-    delete[] bufferSequence;
-    return sortedSequence;
+
+    delete[] leftSequence;
+    delete[] rightSequence;
+    return s;
 }
 
 

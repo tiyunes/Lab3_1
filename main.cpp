@@ -8,8 +8,12 @@
 #include "CountingSort.h"
 #include "MergeSort.h"
 #include "QuickSort.h"
+#include "QuickSortF.h"
+#include "QuickSortM.h"
+#include "QuickSort3.h"
 #include "tests.h"
 #include "benchmark.h"
+#include "ISorter.h"
 #include <cmath>
 
 
@@ -60,12 +64,14 @@ int main()
     int length = 0;
     int x;
     pair<int, int> p1;
-    while (var != 6)
+    while (var != 8)
     {
         cout << "Choose the option: " << endl;
         cout << "1. Sort sequence by BubbleSort " << endl << "2. Sort sequence by InsertionSort" << endl
         << "3. Sort sequence by MergeSort" << endl << "4. Sort sequence by QuickSort" << endl
-        << "5. Sort sequence by CountingSort" << endl << "6. Exit" << endl;
+        << "5. Sort sequence by QuickSort with first barrier element" << endl
+        << "6. Sort sequence by QuickSort with middle barrier element" << endl
+        << "7. Sort sequence by CountingSort" << endl << "8. Exit" << endl;
         cin >> var;
         switch (var)
         {
@@ -86,13 +92,16 @@ int main()
                             cin >> x;
                             s1->Append(x);
                         }
+                        ISorter<int>* isort = new BubbleSorter<int>();
                         Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(length);
-                        sSort1 = BubbleSort(s1, compInt);
+                        sSort1 = isort->Sorter(s1, compInt);
                         cout << "Sorted sequence: " << endl;
                         for (int i = 0; i < length; i++)
                         {
                             cout << sSort1->Get(i) << endl;
                         }
+                        delete[] s1;
+                        //delete[] sSort1;
                         break;
                     }
                     catch(out_of_range &e)
@@ -119,13 +128,16 @@ int main()
                             cin >> x;
                             s1->Append(x);
                         }
+                        ISorter<int>* isort = new InsertionSorter<int>();
                         Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(length);
-                        sSort1 = InsertionSort(s1, compInt);
+                        sSort1 = isort->Sorter(s1, compInt);
                         cout << "Sorted sequence: " << endl;
                         for (int i = 0; i < length; i++)
                         {
                             cout << sSort1->Get(i) << endl;
                         }
+                        delete[] s1;
+                        //delete[] sSort1;
                         break;
                     }
                     catch(out_of_range &e)
@@ -152,13 +164,16 @@ int main()
                             cin >> x;
                             s1->Append(x);
                         }
+                        ISorter<int>* isort = new MergeSorter<int>();
                         Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(length);
-                        sSort1 = MergeSort(s1, compInt);
+                        sSort1 = isort->Sorter(s1, compInt);
                         cout << "Sorted sequence: " << endl;
                         for (int i = 0; i < length; i++)
                         {
                             cout << sSort1->Get(i) << endl;
                         }
+                        delete[] s1;
+                        //delete[] sSort1;
                         break;
                     }
                     catch(out_of_range &e)
@@ -185,13 +200,16 @@ int main()
                             cin >> x;
                             s1->Append(x);
                         }
+                        ISorter<int>* isort = new QuickSorter<int>();
                         Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(length);
-                        sSort1 = QuickSort(s1, compInt);
+                        sSort1 = isort->Sorter(s1, compInt);
                         cout << "Sorted sequence: " << endl;
                         for (int i = 0; i < length; i++)
                         {
                             cout << sSort1->Get(i) << endl;
                         }
+                        delete[] s1;
+                        //delete[] sSort1;
                         break;
                     }
                     catch(out_of_range &e)
@@ -201,7 +219,79 @@ int main()
                     }
                 }
 
-            case 5:
+             case 5:
+                {
+                    try
+                    {
+                        cout << "Enter the length of sequence: " << endl;
+                        cin >> length;
+                        if (length <= 0)
+                        {
+                            throw std::out_of_range("Invalid length");
+                        }
+                        Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>();
+                        cout << "Enter the elements of sequence: " << endl;
+                        for (int i = 0; i < length; i++)
+                        {
+                            cin >> x;
+                            s1->Append(x);
+                        }
+                        ISorter<int>* isort = new QuickSorterF<int>();
+                        Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(length);
+                        sSort1 = isort->Sorter(s1, compInt);
+                        cout << "Sorted sequence: " << endl;
+                        for (int i = 0; i < length; i++)
+                        {
+                            cout << sSort1->Get(i) << endl;
+                        }
+                        delete[] s1;
+                        //delete[] sSort1;
+                        break;
+                    }
+                    catch(out_of_range &e)
+                    {
+                        cout << e.what() << endl;
+                        break;
+                    }
+                }
+
+                case 6:
+                {
+                    try
+                    {
+                        cout << "Enter the length of sequence: " << endl;
+                        cin >> length;
+                        if (length <= 0)
+                        {
+                            throw std::out_of_range("Invalid length");
+                        }
+                        Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>();
+                        cout << "Enter the elements of sequence: " << endl;
+                        for (int i = 0; i < length; i++)
+                        {
+                            cin >> x;
+                            s1->Append(x);
+                        }
+                        ISorter<int>* isort = new QuickSorterM<int>();
+                        Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(length);
+                        sSort1 = isort->Sorter(s1, compInt);
+                        cout << "Sorted sequence: " << endl;
+                        for (int i = 0; i < length; i++)
+                        {
+                            cout << sSort1->Get(i) << endl;
+                        }
+                        delete[] s1;
+                        //delete[] sSort1;
+                        break;
+                    }
+                    catch(out_of_range &e)
+                    {
+                        cout << e.what() << endl;
+                        break;
+                    }
+                }
+
+            case 7:
                 {
                     try
                     {
@@ -229,6 +319,8 @@ int main()
                         {
                             cout << sSort1->Get(i) << endl;
                         }
+                        delete[] s1;
+                        delete[] sSort1;
                         break;
                     }
                     catch(out_of_range &e)
@@ -238,7 +330,7 @@ int main()
                     }
                 }
 
-            case 6:
+            case 8:
                 break;
 
             default:

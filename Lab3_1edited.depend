@@ -1,0 +1,128 @@
+# depslib dependency file v1.0
+1635028050 source:c:\users\yunes\documents\c++\lab3_1edited\main.cpp
+	<iostream>
+	<functional>
+	<utility>
+	<vector>
+	<algorithm>
+	"BubbleSort.h"
+	"InsertionSort.h"
+	"CountingSort.h"
+	"MergeSort.h"
+	"QuickSort.h"
+	"QuickSortF.h"
+	"QuickSortM.h"
+	"QuickSort3.h"
+	"tests.h"
+	"benchmark.h"
+	"ISorter.h"
+	<cmath>
+
+1634212226 c:\users\yunes\documents\c++\lab3_1edited\bubblesort.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1634211962 c:\users\yunes\documents\c++\lab3_1edited\sequence.h
+	"LinkedList.h"
+	"DynamicArray.h"
+
+1631649260 c:\users\yunes\documents\c++\lab3_1edited\linkedlist.h
+	<stdexcept>
+	<iostream>
+
+1631698156 c:\users\yunes\documents\c++\lab3_1edited\dynamicarray.h
+
+1631725230 c:\users\yunes\documents\c++\lab3_1edited\arraysequence.h
+	"SEQUENCE.H"
+	"DynamicArray.h"
+
+1634212645 c:\users\yunes\documents\c++\lab3_1edited\insertionsort.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1635097878 c:\users\yunes\documents\c++\lab3_1edited\countingsort.h
+	<utility>
+	"SEQUENCE.H"
+	"LinkedList.h"
+	"LinkedListSequence.h"
+	"ArraySequence.h"
+	<functional>
+	<set>
+
+1631725666 c:\users\yunes\documents\c++\lab3_1edited\linkedlistsequence.h
+	"SEQUENCE.H"
+	"LinkedList.h"
+
+1634248119 c:\users\yunes\documents\c++\lab3_1edited\mergesort.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1634242899 c:\users\yunes\documents\c++\lab3_1edited\quicksort.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1634241744 c:\users\yunes\documents\c++\lab3_1edited\quicksortf.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1634241522 c:\users\yunes\documents\c++\lab3_1edited\quicksortm.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1634510915 c:\users\yunes\documents\c++\lab3_1edited\quicksort3.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1635023654 c:\users\yunes\documents\c++\lab3_1edited\tests.h
+	<functional>
+	<utility>
+	"BubbleSort.h"
+	"InsertionSort.h"
+	"CountingSort.h"
+	"MergeSort.h"
+	"QuickSort.h"
+	"QuickSortM.h"
+	"QuickSortF.h"
+	"ISorter.h"
+	<cassert>
+	<cmath>
+
+1635025122 c:\users\yunes\documents\c++\lab3_1edited\benchmark.h
+	<chrono>
+	<fstream>
+	<iostream>
+	<functional>
+	<utility>
+	<random>
+	<vector>
+	<cstdlib>
+	<ctime>
+	"BubbleSort.h"
+	"InsertionSort.h"
+	"CountingSort.h"
+	"MergeSort.h"
+	"QuickSort.h"
+	"QuickSortF.h"
+	"QuickSortM.h"
+
+1635022796 c:\users\yunes\documents\c++\lab3_1edited\isorter.h
+	<functional>
+	<utility>
+	<vector>
+	<algorithm>
+	"BubbleSort.h"
+	"InsertionSort.h"
+	"CountingSort.h"
+	"MergeSort.h"
+	"QuickSort.h"
+	"QuickSortF.h"
+	"QuickSortM.h"
+	"QuickSort3.h"
+

@@ -7,25 +7,25 @@
 template<typename T>
 Sequence<T>* BubbleSort(Sequence<T>* s, function<bool(T, T)> cmp)
 {
-    Sequence<T>* sortedSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
-    for (int i = 0; i < s->GetLength(); i++)
-    {
-        sortedSequence->Set(i, s->Get(i));
-    }
+    //Sequence<T>* sortedSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
+    //for (int i = 0; i < s->GetLength(); i++)
+    //{
+    //    sortedSequence->Set(i, s->Get(i));
+    //}
     T buff;
-    for(int i = 0; i < (sortedSequence->GetLength() - 1); i++)
+    for(int i = 0; i < (s->GetLength() - 1); i++)
     {
-        for(int j = (sortedSequence->GetLength() - 1); j > i; j--)
+        for(int j = (s->GetLength() - 1); j > i; j--)
         {
-            if(!(cmp(sortedSequence->Get(j - 1), sortedSequence->Get(j))))
+            if(!(cmp(s->Get(j - 1), s->Get(j))))
             {
-                buff = sortedSequence->Get(j - 1);
-                sortedSequence->Set((j - 1), sortedSequence->Get(j));
-                sortedSequence->Set(j, buff);
+                buff = s->Get(j - 1);
+                s->Set((j - 1), s->Get(j));
+                s->Set(j, buff);
             }
         }
     }
-    return sortedSequence;
+    return s;
 }
 
 

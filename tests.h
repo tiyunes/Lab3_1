@@ -7,6 +7,9 @@
 #include "CountingSort.h"
 #include "MergeSort.h"
 #include "QuickSort.h"
+#include "QuickSortM.h"
+#include "QuickSortF.h"
+#include "ISorter.h"
 #include <cassert>
 #include <cmath>
 
@@ -48,17 +51,29 @@ void testInt (function<bool(int, int)> compInt)
     correctSequence->Append(10);
     correctSequence->Append(11);
 
+    ISorter<int>* isort1 = new BubbleSorter<int>();
     Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(7);
-    sSort1 = BubbleSort(s1, compInt);
+    sSort1 = isort1->Sorter(s1, compInt);
 
+    ISorter<int>* isort2 = new InsertionSorter<int>();
     Sequence<int>* sSort2 = (Sequence<int>*)new ArraySequence<int>(7);
-    sSort2 = InsertionSort(s1, compInt);
+    sSort2 = isort2->Sorter(s1, compInt);
 
+    ISorter<int>* isort3 = new MergeSorter<int>();
     Sequence<int>* sSort3 = (Sequence<int>*)new ArraySequence<int>(7);
-    sSort3 = MergeSort(s1, compInt);
+    sSort3 = isort3->Sorter(s1, compInt);
 
+    ISorter<int>* isort4 = new QuickSorter<int>();
     Sequence<int>* sSort4 = (Sequence<int>*)new ArraySequence<int>(7);
-    sSort4 = QuickSort(s1, compInt);
+    sSort4 = isort4->Sorter(s1, compInt);
+
+    ISorter<int>* isort5 = new QuickSorterF<int>();
+    Sequence<int>* sSort5 = (Sequence<int>*)new ArraySequence<int>(7);
+    sSort5 = isort5->Sorter(s1, compInt);
+
+    ISorter<int>* isort6 = new QuickSorterM<int>();
+    Sequence<int>* sSort6 = (Sequence<int>*)new ArraySequence<int>(7);
+    sSort6 = isort6->Sorter(s1, compInt);
 
     Sequence<pair<int, int>>* s5 = (Sequence<pair<int, int>>*)new ArraySequence<pair<int, int>>();
     pair<int, int> p1, p2, p3, p4, p5, p6, p7;
@@ -91,15 +106,23 @@ void testInt (function<bool(int, int)> compInt)
     s5->Append(p6);
     s5->Append(p7);
 
-    Sequence<int>* sSort5 = (Sequence<int>*)new ArraySequence<int>(7);
-    sSort5 = CountingSort(s5, 8);
+    Sequence<int>* sSort7 = (Sequence<int>*)new ArraySequence<int>(7);
+    sSort7 = CountingSort(s5, 8);
 
     if(compare(sSort1, correctSequence) && compare(sSort2, correctSequence) && compare(sSort3, correctSequence) && compare(sSort4, correctSequence)
-       && compare(sSort5, correctSequence))
+       && compare(sSort5, correctSequence) && compare(sSort6, correctSequence) && compare(sSort7, correctSequence))
     {
         cout << "Tests for integer sequences are successful" << endl;
     }
     else cout << "Error in testing integer" << endl;
+    delete[] s1;
+    delete[] s5;
+    //delete[] sSort1;
+    //delete[] sSort2;
+    //delete[] sSort3;
+    //delete[] sSort4;
+    //delete[] sSort5;
+    delete[] correctSequence;
 }
 
 bool compareDouble(Sequence<double>* s1, Sequence<double>* s2)
@@ -142,17 +165,29 @@ void testDouble (function<bool(double, double)> compDouble)
     correctSequence->Append(37.4);
     correctSequence->Append(55.1);
 
-    Sequence<double>* sSort1 = (Sequence<double>*)new ArraySequence<double>(9);
-    sSort1 = BubbleSort(s1, compDouble);
+    ISorter<double>* isort1 = new BubbleSorter<double>();
+    Sequence<double>* sSort1 = (Sequence<double>*)new ArraySequence<double>(7);
+    sSort1 = isort1->Sorter(s1, compDouble);
 
-    Sequence<double>* sSort2 = (Sequence<double>*)new ArraySequence<double>(9);
-    sSort2 = InsertionSort(s1, compDouble);
+    ISorter<double>* isort2 = new InsertionSorter<double>();
+    Sequence<double>* sSort2 = (Sequence<double>*)new ArraySequence<double>(7);
+    sSort2 = isort2->Sorter(s1, compDouble);
 
-    Sequence<double>* sSort3 = (Sequence<double>*)new ArraySequence<double>(9);
-    sSort3 = MergeSort(s1, compDouble);
+    ISorter<double>* isort3 = new MergeSorter<double>();
+    Sequence<double>* sSort3 = (Sequence<double>*)new ArraySequence<double>(7);
+    sSort3 = isort3->Sorter(s1, compDouble);
 
-    Sequence<double>* sSort4 = (Sequence<double>*)new ArraySequence<double>(9);
-    sSort4 = QuickSort(s1, compDouble);
+    ISorter<double>* isort4 = new QuickSorter<double>();
+    Sequence<double>* sSort4 = (Sequence<double>*)new ArraySequence<double>(7);
+    sSort4 = isort4->Sorter(s1, compDouble);
+
+    ISorter<double>* isort5 = new QuickSorterF<double>();
+    Sequence<double>* sSort5 = (Sequence<double>*)new ArraySequence<double>(7);
+    sSort5 = isort5->Sorter(s1, compDouble);
+
+    ISorter<double>* isort6 = new QuickSorterM<double>();
+    Sequence<double>* sSort6 = (Sequence<double>*)new ArraySequence<double>(7);
+    sSort6 = isort6->Sorter(s1, compDouble);
 
     Sequence<pair<double, int>>* s5 = (Sequence<pair<double, int>>*)new ArraySequence<pair<double, int>>();
     pair<double, int> p1, p2, p3, p4, p5, p6, p7, p8, p9;
@@ -193,15 +228,23 @@ void testDouble (function<bool(double, double)> compDouble)
     s5->Append(p8);
     s5->Append(p9);
 
-    Sequence<double>* sSort5 = (Sequence<double>*)new ArraySequence<double>(9);
-    sSort5 = CountingSort(s5, 9);
+    Sequence<double>* sSort7 = (Sequence<double>*)new ArraySequence<double>(9);
+    sSort7 = CountingSort(s5, 9);
 
     if(compareDouble(sSort1, correctSequence) && compareDouble(sSort2, correctSequence) && compareDouble(sSort3, correctSequence) && compareDouble(sSort4, correctSequence)
-       && compareDouble(sSort5, correctSequence))
+       && compareDouble(sSort5, correctSequence) && compareDouble(sSort6, correctSequence) && compareDouble(sSort7, correctSequence))
     {
         cout << "Tests for double sequences are successful" << endl;
     }
     else cout << "Error in testing double" << endl;
+    delete[] s1;
+    delete[] s5;
+    //delete[] sSort1;
+    //delete[] sSort2;
+    //delete[] sSort3;
+    //delete[] sSort4;
+    //delete[] sSort5;
+    delete[] correctSequence;
 }
 
 bool compareChar(Sequence<char>* s1, Sequence<char>* s2)
@@ -242,17 +285,29 @@ void testChar (function<bool(char, char)> compChar)
     correctSequence->Append('x');
     correctSequence->Append('z');
 
+    ISorter<char>* isort1 = new BubbleSorter<char>();
     Sequence<char>* sSort1 = (Sequence<char>*)new ArraySequence<char>(8);
-    sSort1 = BubbleSort(s1, compChar);
+    sSort1 = isort1->Sorter(s1, compChar);
 
+    ISorter<char>* isort2 = new InsertionSorter<char>();
     Sequence<char>* sSort2 = (Sequence<char>*)new ArraySequence<char>(8);
-    sSort2 = InsertionSort(s1, compChar);
+    sSort2 = isort2->Sorter(s1, compChar);
 
+    ISorter<char>* isort3 = new MergeSorter<char>();
     Sequence<char>* sSort3 = (Sequence<char>*)new ArraySequence<char>(8);
-    sSort3 = MergeSort(s1, compChar);
+    sSort3 = isort3->Sorter(s1, compChar);
 
+    ISorter<char>* isort4 = new QuickSorter<char>();
     Sequence<char>* sSort4 = (Sequence<char>*)new ArraySequence<char>(8);
-    sSort4 = QuickSort(s1, compChar);
+    sSort4 = isort4->Sorter(s1, compChar);
+
+    ISorter<char>* isort5 = new QuickSorterF<char>();
+    Sequence<char>* sSort5 = (Sequence<char>*)new ArraySequence<char>(8);
+    sSort5 = isort5->Sorter(s1, compChar);
+
+    ISorter<char>* isort6 = new QuickSorterM<char>();
+    Sequence<char>* sSort6 = (Sequence<char>*)new ArraySequence<char>(8);
+    sSort6 = isort6->Sorter(s1, compChar);
 
     Sequence<pair<char, int>>* s5 = (Sequence<pair<char, int>>*)new ArraySequence<pair<char, int>>();
     pair<char, int> p1, p2, p3, p4, p5, p6, p7, p8;
@@ -289,15 +344,23 @@ void testChar (function<bool(char, char)> compChar)
     s5->Append(p7);
     s5->Append(p8);
 
-    Sequence<char>* sSort5 = (Sequence<char>*)new ArraySequence<char>(8);
-    sSort5 = CountingSort(s5, 8);
+    Sequence<char>* sSort7 = (Sequence<char>*)new ArraySequence<char>(8);
+    sSort7 = CountingSort(s5, 8);
 
 
     if(compareChar(sSort1, correctSequence) && compareChar(sSort2, correctSequence) && compareChar(sSort3, correctSequence) && compareChar(sSort4, correctSequence)
-       && compareChar(sSort5, correctSequence))
+       && compareChar(sSort5, correctSequence) && compareChar(sSort6, correctSequence) && compareChar(sSort7, correctSequence))
     {
         cout << "Tests for char sequences are successful" << endl;
     }
     else cout << "Error in testing char" << endl;
+    delete[] s1;
+    delete[] s5;
+    //delete[] sSort1;
+    //delete[] sSort2;
+    //delete[] sSort3;
+    //delete[] sSort4;
+    //delete[] sSort5;
+    delete[] correctSequence;
 }
 #endif // TESTS_H_INCLUDED

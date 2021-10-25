@@ -7,25 +7,25 @@
 template<typename T>
 Sequence<T>* InsertionSort(Sequence<T>* s, function<bool(T, T)> cmp)
 {
-    Sequence<T>* sortedSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
-    for (int i = 0; i < s->GetLength(); i++)
-    {
-        sortedSequence->Set(i, s->Get(i));
-    }
+    //Sequence<T>* sortedSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
+    //for (int i = 0; i < s->GetLength(); i++)
+    //{
+    //    sortedSequence->Set(i, s->Get(i));
+    //}
     T buff;
     int prevIndex;
-    for (int j = 0; j < sortedSequence->GetLength(); j++)
+    for (int j = 0; j < s->GetLength(); j++)
     {
-        buff = sortedSequence->Get(j);
+        buff = s->Get(j);
         prevIndex = j - 1;
-        while (prevIndex >= 0 && !(cmp(sortedSequence->Get(prevIndex), buff)))
+        while (prevIndex >= 0 && !(cmp(s->Get(prevIndex), buff)))
         {
-            sortedSequence->Set((prevIndex + 1), sortedSequence->Get(prevIndex));
-            sortedSequence->Set(prevIndex, buff);
+            s->Set((prevIndex + 1), s->Get(prevIndex));
+            s->Set(prevIndex, buff);
             prevIndex--;
         }
     }
-    return sortedSequence;
+    return s;
 }
 
 

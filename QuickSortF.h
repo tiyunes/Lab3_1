@@ -1,5 +1,5 @@
-#ifndef QUICKSORT_H_INCLUDED
-#define QUICKSORT_H_INCLUDED
+#ifndef QUICKSORTF_H_INCLUDED
+#define QUICKSORTF_H_INCLUDED
 #include "SEQUENCE.H"
 #include "ArraySequence.h"
 #include <functional>
@@ -13,13 +13,13 @@
 //}
 
 template<typename T>
-void QuickSortH(Sequence<T>* s, function<bool(T, T)> cmp, int left, int right)
+void QuickSortFH(Sequence<T>* s, function<bool(T, T)> cmp, int left, int right)
 {
     int i, j;
     T pivot, buff;
     i = left;
     j = right;
-    pivot = s->Get(right);
+    pivot = s->Get(left);
     do
     {
         while ((cmp(s->Get(i), pivot)) && (i < right)) i++;
@@ -35,19 +35,19 @@ void QuickSortH(Sequence<T>* s, function<bool(T, T)> cmp, int left, int right)
     }
     while (i <= j);
 
-    if (left < j) QuickSortH(s, cmp, left, j);
-    if (i < right) QuickSortH(s, cmp, i, right);
+    if (left < j) QuickSortMH(s, cmp, left, j);
+    if (i < right) QuickSortMH(s, cmp, i, right);
 }
 
 template<typename T>
-Sequence<T>* QuickSort(Sequence<T>* s, function<bool(T, T)> cmp)
+Sequence<T>* QuickSortF(Sequence<T>* s, function<bool(T, T)> cmp)
 {
     int i, j, left, right;
     T pivot, buff;
     left = 0; right = (s->GetLength() - 1);
     i = left;
     j = right;
-    pivot = s->Get((s->GetLength() - 1));
+    pivot = s->Get(0);
     do
     {
         while ((cmp(s->Get(i), pivot)) && (i < right)) i++;
@@ -63,10 +63,11 @@ Sequence<T>* QuickSort(Sequence<T>* s, function<bool(T, T)> cmp)
     }
     while (i <= j);
 
-    if (left < j) QuickSortH(s, cmp, left, j);
-    if (i < right) QuickSortH(s, cmp, i, right);
+    if (left < j) QuickSortMH(s, cmp, left, j);
+    if (i < right) QuickSortMH(s, cmp, i, right);
 
     return s;
 }
 
-#endif // QUICKSORT_H_INCLUDED
+
+#endif // QUICKSORTF_H_INCLUDED
