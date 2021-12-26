@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1640517102 source:c:\users\yunes\documents\c++\lab3_1edited\main.cpp
+1640522585 source:c:\users\yunes\documents\c++\lab3_1edited\main.cpp
 	<iostream>
 	<functional>
 	<utility>
@@ -82,7 +82,7 @@
 	"ArraySequence.h"
 	<functional>
 
-1640463533 c:\users\yunes\documents\c++\lab3_1edited\tests.h
+1640527835 c:\users\yunes\documents\c++\lab3_1edited\tests.h
 	<functional>
 	<utility>
 	"BubbleSort.h"
@@ -93,10 +93,13 @@
 	"QuickSortMiddle.h"
 	"QuickSortRight.h"
 	"ISorter.h"
+	"HeapSort.h"
+	"ShellSort.h"
+	"SelectionSort.h"
 	<cassert>
 	<cmath>
 
-1640522169 c:\users\yunes\documents\c++\lab3_1edited\benchmark.h
+1640524958 c:\users\yunes\documents\c++\lab3_1edited\benchmark.h
 	<chrono>
 	<fstream>
 	<iostream>

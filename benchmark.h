@@ -40,6 +40,7 @@ double timeSortMicro(ISorter<int>* i, Sequence<int>* s, function<bool(int, int)>
 
     return duration1.count();
 }
+
 double timeSortNano(ISorter<int>* i, Sequence<int>* s, function<bool(int, int)> cmp)
 {
     auto start1 = chrono::steady_clock::now();
