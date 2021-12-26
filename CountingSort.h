@@ -11,22 +11,25 @@
 template<typename T>
 Sequence<T>* CountingSort(Sequence<pair<T, int>>* s, int maxKey)
 {
-    Sequence<LinkedList<T>*>* countingList = (Sequence<LinkedList<T>*>*)new LinkedListSequence<T>(maxKey + 1);
+    Sequence<ArraySequence<T>*>* countingList = (Sequence<ArraySequence<T>*>*)new LinkedListSequence<T>(maxKey + 1);
     set<int> keys;
+
     for (int i = 0; i < s->GetLength(); i++)
     {
-        countingList->GetP((s->Get(i)).second) = (LinkedList<T>*)new LinkedList<T>();
+        countingList->GetP((s->Get(i)).second) = (ArraySequence<T>*)new ArraySequence<T>();
         keys.insert((s->Get(i)).second);
     }
+
     for (int i = 0; i < s->GetLength(); i++)
     {
         (countingList->GetP((s->Get(i)).second))->Append((s->Get(i)).first);
     }
+
     int sequenceIndex = 0;
-    Sequence<T>* sortedSequence = (Sequence<T>*) new LinkedListSequence<T>(s->GetLength());
+    Sequence<T>* sortedSequence = (Sequence<T>*) new ArraySequence<T>(s->GetLength());
     for (set<int>::const_iterator it = keys.begin(); it != keys.end(); ++it)
     {
-        //LinkedList<T>* pointer = new LinkedList<T>((countingList->GetP(*it))->GetLength());
+        //ArraySequence<T>* pointer = new ArraySequence<T>((countingList->GetP(*it))->GetLength());
         //pointer = countingList->GetP(*it);
         for (int j = 0; j < (countingList->GetP(*it))->GetLength(); j++)
         {
@@ -34,7 +37,7 @@ Sequence<T>* CountingSort(Sequence<pair<T, int>>* s, int maxKey)
             sequenceIndex++;
         }
     }
-    delete[] countingList;
+
     return sortedSequence;
 }
 

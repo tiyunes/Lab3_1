@@ -249,10 +249,13 @@ public:
 
     ~LinkedList()
     {
-     for (int i = 0; i < this->Size; i++)
-     {
-         this->Pop();
-     }
+        if (this != nullptr)
+        {
+            for (int i = 0; i < this->Size; i++)
+             {
+                 this->Pop();
+             }
+        }
     }
 
 

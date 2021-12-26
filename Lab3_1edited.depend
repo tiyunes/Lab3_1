@@ -1,48 +1,50 @@
 # depslib dependency file v1.0
-1635028050 source:c:\users\yunes\documents\c++\lab3_1edited\main.cpp
+1640517102 source:c:\users\yunes\documents\c++\lab3_1edited\main.cpp
 	<iostream>
 	<functional>
 	<utility>
 	<vector>
 	<algorithm>
+	<cmath>
+	<string>
+	<sstream>
 	"BubbleSort.h"
 	"InsertionSort.h"
 	"CountingSort.h"
 	"MergeSort.h"
-	"QuickSort.h"
-	"QuickSortF.h"
-	"QuickSortM.h"
-	"QuickSort3.h"
+	"QuickSortRight.h"
+	"QuickSortLeft.h"
+	"QuickSortMiddle.h"
 	"tests.h"
 	"benchmark.h"
 	"ISorter.h"
-	<cmath>
+	"HeapSort.h"
 
-1634212226 c:\users\yunes\documents\c++\lab3_1edited\bubblesort.h
+1638990353 c:\users\yunes\documents\c++\lab3_1edited\bubblesort.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
 
-1634211962 c:\users\yunes\documents\c++\lab3_1edited\sequence.h
+1638987091 c:\users\yunes\documents\c++\lab3_1edited\sequence.h
 	"LinkedList.h"
 	"DynamicArray.h"
 
-1631649260 c:\users\yunes\documents\c++\lab3_1edited\linkedlist.h
+1640454445 c:\users\yunes\documents\c++\lab3_1edited\linkedlist.h
 	<stdexcept>
 	<iostream>
 
-1631698156 c:\users\yunes\documents\c++\lab3_1edited\dynamicarray.h
+1638987207 c:\users\yunes\documents\c++\lab3_1edited\dynamicarray.h
 
-1631725230 c:\users\yunes\documents\c++\lab3_1edited\arraysequence.h
+1638987230 c:\users\yunes\documents\c++\lab3_1edited\arraysequence.h
 	"SEQUENCE.H"
 	"DynamicArray.h"
 
-1634212645 c:\users\yunes\documents\c++\lab3_1edited\insertionsort.h
+1638990434 c:\users\yunes\documents\c++\lab3_1edited\insertionsort.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
 
-1635097878 c:\users\yunes\documents\c++\lab3_1edited\countingsort.h
+1640463137 c:\users\yunes\documents\c++\lab3_1edited\countingsort.h
 	<utility>
 	"SEQUENCE.H"
 	"LinkedList.h"
@@ -51,26 +53,26 @@
 	<functional>
 	<set>
 
-1631725666 c:\users\yunes\documents\c++\lab3_1edited\linkedlistsequence.h
+1638987147 c:\users\yunes\documents\c++\lab3_1edited\linkedlistsequence.h
 	"SEQUENCE.H"
 	"LinkedList.h"
 
-1634248119 c:\users\yunes\documents\c++\lab3_1edited\mergesort.h
+1640473177 c:\users\yunes\documents\c++\lab3_1edited\mergesort.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
 
-1634242899 c:\users\yunes\documents\c++\lab3_1edited\quicksort.h
+1638990489 c:\users\yunes\documents\c++\lab3_1edited\quicksort.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
 
-1634241744 c:\users\yunes\documents\c++\lab3_1edited\quicksortf.h
+1638990505 c:\users\yunes\documents\c++\lab3_1edited\quicksortf.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
 
-1634241522 c:\users\yunes\documents\c++\lab3_1edited\quicksortm.h
+1638990520 c:\users\yunes\documents\c++\lab3_1edited\quicksortm.h
 	"SEQUENCE.H"
 	"ArraySequence.h"
 	<functional>
@@ -80,21 +82,21 @@
 	"ArraySequence.h"
 	<functional>
 
-1635023654 c:\users\yunes\documents\c++\lab3_1edited\tests.h
+1640463533 c:\users\yunes\documents\c++\lab3_1edited\tests.h
 	<functional>
 	<utility>
 	"BubbleSort.h"
 	"InsertionSort.h"
 	"CountingSort.h"
 	"MergeSort.h"
-	"QuickSort.h"
-	"QuickSortM.h"
-	"QuickSortF.h"
+	"QuickSortLeft.h"
+	"QuickSortMiddle.h"
+	"QuickSortRight.h"
 	"ISorter.h"
 	<cassert>
 	<cmath>
 
-1635025122 c:\users\yunes\documents\c++\lab3_1edited\benchmark.h
+1640522169 c:\users\yunes\documents\c++\lab3_1edited\benchmark.h
 	<chrono>
 	<fstream>
 	<iostream>
@@ -108,21 +110,54 @@
 	"InsertionSort.h"
 	"CountingSort.h"
 	"MergeSort.h"
-	"QuickSort.h"
-	"QuickSortF.h"
-	"QuickSortM.h"
+	"QuickSortMiddle.h"
+	"QuickSortRight.h"
+	"QuickSortLeft.h"
 
-1635022796 c:\users\yunes\documents\c++\lab3_1edited\isorter.h
+1640473111 c:\users\yunes\documents\c++\lab3_1edited\isorter.h
 	<functional>
 	<utility>
 	<vector>
 	<algorithm>
 	"BubbleSort.h"
 	"InsertionSort.h"
-	"CountingSort.h"
 	"MergeSort.h"
-	"QuickSort.h"
-	"QuickSortF.h"
-	"QuickSortM.h"
-	"QuickSort3.h"
+	"QuickSortLeft.h"
+	"QuickSortRight.h"
+	"QuickSortMiddle.h"
+	"ShellSort.h"
+	"HeapSort.h"
+	"SelectionSort.h"
+
+1640442463 c:\users\yunes\documents\c++\lab3_1edited\heapsort.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	"binary_heap.h"
+	<functional>
+
+1640442032 c:\users\yunes\documents\c++\lab3_1edited\binary_heap.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+
+1640451936 c:\users\yunes\documents\c++\lab3_1edited\quicksortright.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1640451834 c:\users\yunes\documents\c++\lab3_1edited\quicksortleft.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1640451900 c:\users\yunes\documents\c++\lab3_1edited\quicksortmiddle.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1640443073 c:\users\yunes\documents\c++\lab3_1edited\shellsort.h
+	"SEQUENCE.H"
+	"ArraySequence.h"
+	<functional>
+
+1640462073 c:\users\yunes\documents\c++\lab3_1edited\selectionsort.h
 

@@ -190,7 +190,11 @@ Sequence<T>* ArraySequence<T>::Concat(Sequence <T> *l)
 template<class T>
 ArraySequence<T>::~ArraySequence()
 {
-    delete[] this->items;
+    if (this->items != nullptr)
+    {
+
+        delete this->items;
+    }
 }
 
 

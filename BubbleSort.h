@@ -5,7 +5,7 @@
 #include <functional>
 
 template<typename T>
-Sequence<T>* BubbleSort(Sequence<T>* s, function<bool(T, T)> cmp)
+void BubbleSort(Sequence<T>* s, function<bool(T, T)> cmp)
 {
     //Sequence<T>* sortedSequence = (Sequence<T>*)new ArraySequence<T>(s->GetLength());
     //for (int i = 0; i < s->GetLength(); i++)
@@ -25,7 +25,6 @@ Sequence<T>* BubbleSort(Sequence<T>* s, function<bool(T, T)> cmp)
             }
         }
     }
-    return s;
 }
 
 

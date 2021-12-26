@@ -13,12 +13,53 @@
 #include "InsertionSort.h"
 #include "CountingSort.h"
 #include "MergeSort.h"
-#include "QuickSort.h"
-#include "QuickSortF.h"
-#include "QuickSortM.h"
+#include "QuickSortMiddle.h"
+#include "QuickSortRight.h"
+#include "QuickSortLeft.h"
 
-const int n = 9;
-int size[n] = {1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000};
+const int n = 8;
+vector<int> sizes = {1000, 2500, 5000, 6000, 7000, 8000, 9000, 10000};
+
+
+double timeSortMilli(ISorter<int>* i, Sequence<int>* s, function<bool(int, int)> cmp)
+{
+    auto start1 = chrono::steady_clock::now();
+    i->Sorter(s, cmp);
+    auto end1 = chrono::steady_clock::now();
+    chrono::duration<double, milli> duration1 = end1 - start1;
+
+    return duration1.count();
+}
+
+double timeSortMicro(ISorter<int>* i, Sequence<int>* s, function<bool(int, int)> cmp)
+{
+    auto start1 = chrono::steady_clock::now();
+    i->Sorter(s, cmp);
+    auto end1 = chrono::steady_clock::now();
+    chrono::duration<double, micro> duration1 = end1 - start1;
+
+    return duration1.count();
+}
+double timeSortNano(ISorter<int>* i, Sequence<int>* s, function<bool(int, int)> cmp)
+{
+    auto start1 = chrono::steady_clock::now();
+    i->Sorter(s, cmp);
+    auto end1 = chrono::steady_clock::now();
+    chrono::duration<double, nano> duration1 = end1 - start1;
+
+    return duration1.count();
+}
+
+double timeSortCounting(Sequence<pair<int, int>>* s, vector<int>* v)
+{
+    Sequence<int>* sSort1 = (Sequence<int>*)new ArraySequence<int>(s->GetLength());
+    auto start1 = chrono::steady_clock::now();
+    sSort1 = CountingSort(s, *max_element(v->begin(), v->end()));
+    auto end1 = chrono::steady_clock::now();
+    chrono::duration<double, milli> duration1 = end1 - start1;
+
+    return duration1.count();
+}
 
 using namespace std;
 
@@ -36,246 +77,360 @@ function<bool(int, int)>compInteger = comp;
 void RandomBenchmark()
 {
     srand(time(NULL));
+
     vector<Sequence<int>*> sRand;
-    vector<Sequence<pair<int, int>>*> sRand2;
-    //Sequence<pair<int, int>>* sRand2 = (Sequence<pair<int, int>>*) new ArraySequence<pair<int, int>>();
-    pair<int, int> p;
+    vector<Sequence<pair<int, int>>*> sRandPair;
+    vector<vector<int>*> v;
+
     int r;
+
     for (int i = 0; i < n; i++)
     {
-        sRand.push_back((Sequence<int>*)new ArraySequence<int>(size[i]));
-        sRand2.push_back((Sequence<pair<int, int>>*)new ArraySequence<int>(size[i]));
-        for (int j = 0; j < size[i]; j++)
+        sRand.push_back((Sequence<int>*)new ArraySequence<int>(sizes[i]));
+        sRandPair.push_back((Sequence<pair<int, int>>*)new ArraySequence<pair<int, int>>(sizes[i]));
+        v.push_back(new vector<int>);
+    }
+
+    pair<int, int> p1;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < sizes[i]; j++)
         {
-            r = rand() % size[i];
-            sRand[i]->Append(r);
-            p.first = r; p.second = r;
-            sRand2[i]->Append(p);
+            r = rand() % sizes[i];
+            v[i]->push_back(r);
+            p1.first = r;
+            p1.second = r;
+            sRand[i]->Set(j, r);
+            sRandPair[i]->Set(j, p1);
         }
     }
-    ofstream fout("time.csv");
+
+    ofstream file1("nlogn.txt");
+    ofstream file2("n2.txt");
+
     for (int i = 0; i < n; i++)
     {
-        Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s2 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s3 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s4 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s5 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s6 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s7 = (Sequence<int>*)new ArraySequence<int>(size[i]);
+        ISorter<int>* isortBS = new BubbleSorter<int>();
+        double timeBS = timeSortMilli(isortBS, sRand[i], compInteger);
 
-        ISorter<int>* isort1 = new BubbleSorter<int>();
-        auto start1 = chrono::steady_clock::now();
-        s1 = isort1->Sorter(sRand[i], compInteger);
-        auto end1 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration1 = end1 - start1;
-        double time1 = duration1.count();
+        ISorter<int>* isortIS = new InsertionSorter<int>();
+        double timeIS = timeSortMicro(isortIS, sRand[i], compInteger);
 
-        ISorter<int>* isort2 = new InsertionSorter<int>();
-        auto start2 = chrono::steady_clock::now();
-        s2 = isort2->Sorter(sRand[i], compInteger);
-        auto end2 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration2 = end2 - start2;
-        double time2 = duration2.count();
+        ISorter<int>* isortMS = new MergeSorter<int>();
+        double timeMS = timeSortMicro(isortMS, sRand[i], compInteger);
 
-        ISorter<int>* isort3 = new MergeSorter<int>();
-        auto start3 = chrono::steady_clock::now();
-        s3 = isort3->Sorter(sRand[i], compInteger);
-        auto end3 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration3 = end3 - start3;
-        double time3 = duration3.count();
+        ISorter<int>* isortQSL = new QuickSorterLeft<int>();
+        double timeQSL = timeSortMilli(isortQSL, sRand[i], compInteger);
 
-        ISorter<int>* isort4 = new QuickSorter<int>();
-        auto start4 = chrono::steady_clock::now();
-        s4 = isort4->Sorter(sRand[i], compInteger);
-        auto end4 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration4 = end4 - start4;
-        double time4 = duration4.count();
+        ISorter<int>* isortQSR = new QuickSorterRight<int>();
+        double timeQSR = timeSortMilli(isortQSR, sRand[i], compInteger);
 
-        ISorter<int>* isort5 = new QuickSorterF<int>();
-        auto start5 = chrono::steady_clock::now();
-        s5 = isort5->Sorter(sRand[i], compInteger);
-        auto end5 = chrono::steady_clock::now();
-        chrono::duration<double, micro> duration5 = end5 - start5;
-        double time5 = duration5.count();
+        ISorter<int>* isortQSM = new QuickSorterMiddle<int>();
+        double timeQSM = timeSortMicro(isortQSM, sRand[i], compInteger);
 
-        ISorter<int>* isort6 = new QuickSorterM<int>();
-        auto start6 = chrono::steady_clock::now();
-        s6 = isort6->Sorter(sRand[i], compInteger);
-        auto end6 = chrono::steady_clock::now();
-        chrono::duration<double, micro> duration6 = end6 - start6;
-        double time6 = duration6.count();
+        ISorter<int>* isortHS = new HeapSorter<int>();
+        double timeHS = timeSortMicro(isortHS, sRand[i], compInteger);
 
-        auto start7 = chrono::steady_clock::now();
-        s7 = CountingSort(sRand2[i], size[i]);
-        auto end7 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration7 = end7 - start7;
-        double time7 = duration7.count();
+        ISorter<int>* isortSelS = new SelectionSorter<int>();
+        double timeSelS = timeSortMilli(isortSelS, sRand[i], compInteger);
 
-        fout << time1 << ";" << time2 << ";" << time3 << ";" << time4 << ";" << time5 << ";" << time6 << ";" << time7 << endl;
+        ISorter<int>* isortShellS = new ShellSorter<int>();
+        double timeShellS = timeSortMicro(isortShellS, sRand[i], compInteger);
+
+        double timeCountS = timeSortCounting(sRandPair[i], v[i]);
+
+        file1 << sizes[i] << " " << timeMS << " " << timeHS << " " << timeQSM <<  " " << timeShellS << " " << timeIS << endl;
+
+        file2 << sizes[i] << " " << timeBS << " " << " " << timeSelS << " " << timeQSR << " " << timeQSL << " " << timeCountS << endl;
+
+        delete isortBS;
+        delete isortMS;
+        delete isortHS;
+        delete isortIS;
+        delete isortSelS;
+        delete isortShellS;
+        delete isortQSL;
+        delete isortQSM;
+        delete isortQSR;
+        delete sRand[i];
+        delete sRandPair[i];
+        delete v[i];
     }
-    //fin.close();
+
+
+    FILE *gnuplotP = popen("gnuplot -persist", "w");
+    if (gnuplotP)
+    {
+        fprintf(gnuplotP, "set encoding utf8\n");
+        fprintf(gnuplotP, "set terminal windows\n");
+        fprintf(gnuplotP, "set output \"plotTime.pdf\" \n");
+        fprintf(gnuplotP, "set multiplot\n");
+        fprintf(gnuplotP, "set xlabel 'Size of sequence'\n");
+        fprintf(gnuplotP, "set ylabel 'Time (in ms)'\n");
+        fprintf(gnuplotP, "set title 'Time of sorting sequences with random elements'\n");
+        fprintf(gnuplotP, "plot \"n2.txt\"  using 1:2 w lines lc rgb \"blue\" title \"Bubble sort\", '' using 1:3 w lines lc rgb \"black\" title \"Selection sort\", '' using 1:4 w lines lc rgb \"red\" title \"Quick sort (right)\", '' using 1:5 w lines lc rgb \"green\" title \"Quick sort (left)\", '' using 1:6 w lines lc rgb \"yellow\" title  \"Counting sort\" \n");
+        fprintf(gnuplotP, "unset multiplot\n");
+        fflush(gnuplotP);
+        fprintf(gnuplotP,"exit \n");
+        pclose(gnuplotP);
+    }
+
+    FILE *gnuplotP2 = popen("gnuplot -persist", "w");
+    if (gnuplotP2)
+    {
+        fprintf(gnuplotP2, "set encoding utf8\n");
+        fprintf(gnuplotP2, "set terminal windows\n");
+        fprintf(gnuplotP2, "set output \"plotTime2.pdf\" \n");
+        fprintf(gnuplotP2, "set multiplot\n");
+        fprintf(gnuplotP2, "set xlabel 'Size of sequence'\n");
+        fprintf(gnuplotP2, "set ylabel 'Time (in mcs)'\n");
+        fprintf(gnuplotP2, "set title 'Time of sorting sequences with random elements'\n");
+        fprintf(gnuplotP2, "plot \"nlogn.txt\"  using 1:2 w lines lc rgb \"blue\" title \"Merge sort\", '' using 1:3 w lines lc rgb \"red\" title \"Heap sort\", '' using 1:4 w lines lc rgb \"green\" title \"Quick sort (middle)\", '' using 1:5 w lines lc rgb \"black\" title \"Shell sort\", '' using 1:6 w lines lc rgb \"orange\" title \"Insertion sort\" \n");
+        fprintf(gnuplotP2, "unset multiplot\n");
+        fflush(gnuplotP2);
+        fprintf(gnuplotP2,"exit \n");
+        pclose(gnuplotP2);
+    }
+
 }
 
 void SortedBenchmark()
 {
-    vector<Sequence<int>*> v1;
-    vector<Sequence<pair<int, int>>*> v2;
-    pair<int, int> p;
-    int r;
+    vector<Sequence<int>*> sRand;
+    vector<Sequence<pair<int, int>>*> sRandPair;
+    vector<vector<int>*> v;
+
+    pair<int, int> p1;
+
     for (int i = 0; i < n; i++)
     {
-        v1.push_back((Sequence<int>*)new ArraySequence<int>(size[i]));
-        v2.push_back((Sequence<pair<int, int>>*)new ArraySequence<int>(size[i]));
-        for (int j = 0; j < size[i]; j++)
+        sRand.push_back((Sequence<int>*)new ArraySequence<int>(sizes[i]));
+        sRandPair.push_back((Sequence<pair<int, int>>*)new ArraySequence<pair<int, int>>(sizes[i]));
+        v.push_back(new vector<int>);
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < sizes[i]; j++)
         {
-            v1[i]->Append(j);
-            p.first = j; p.second = j;
-            v2[i]->Append(p);
+            v[i]->push_back(j);
+            p1.first = j;
+            p1.second = j;
+            sRand[i]->Set(j, j);
+            sRandPair[i]->Set(j, p1);
         }
     }
-    ofstream fout("timeSorted.csv");
+
+    ofstream file1("nlogn.txt");
+    ofstream file2("n2.txt");
+
     for (int i = 0; i < n; i++)
     {
-        Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s2 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s3 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s4 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s5 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s6 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s7 = (Sequence<int>*)new ArraySequence<int>(size[i]);
+        ISorter<int>* isortBS = new BubbleSorter<int>();
+        double timeBS = timeSortMilli(isortBS, sRand[i], compInteger);
 
-        ISorter<int>* isort1 = new BubbleSorter<int>();
-        auto start1 = chrono::steady_clock::now();
-        s1 = isort1->Sorter(v1[i], compInteger);
-        auto end1 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration1 = end1 - start1;
-        double time1 = duration1.count();
+        ISorter<int>* isortIS = new InsertionSorter<int>();
+        double timeIS = timeSortMicro(isortIS, sRand[i], compInteger);
 
-        ISorter<int>* isort2 = new InsertionSorter<int>();
-        auto start2 = chrono::steady_clock::now();
-        s2 = isort2->Sorter(v1[i], compInteger);
-        auto end2 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration2 = end2 - start2;
-        double time2 = duration2.count();
+        ISorter<int>* isortMS = new MergeSorter<int>();
+        double timeMS = timeSortMicro(isortMS, sRand[i], compInteger);
 
-        ISorter<int>* isort3 = new MergeSorter<int>();
-        auto start3 = chrono::steady_clock::now();
-        s3 = isort3->Sorter(v1[i], compInteger);
-        auto end3 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration3 = end3 - start3;
-        double time3 = duration3.count();
+        ISorter<int>* isortQSL = new QuickSorterLeft<int>();
+        double timeQSL = timeSortMilli(isortQSL, sRand[i], compInteger);
 
-        ISorter<int>* isort4 = new QuickSorter<int>();
-        auto start4 = chrono::steady_clock::now();
-        s4 = isort4->Sorter(v1[i], compInteger);
-        auto end4 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration4 = end4 - start4;
-        double time4 = duration4.count();
+        ISorter<int>* isortQSR = new QuickSorterRight<int>();
+        double timeQSR = timeSortMilli(isortQSR, sRand[i], compInteger);
 
-        ISorter<int>* isort5 = new QuickSorterF<int>();
-        auto start5 = chrono::steady_clock::now();
-        s5 = isort5->Sorter(v1[i], compInteger);
-        auto end5 = chrono::steady_clock::now();
-        chrono::duration<double, micro> duration5 = end5 - start5;
-        double time5 = duration5.count();
+        ISorter<int>* isortQSM = new QuickSorterMiddle<int>();
+        double timeQSM = timeSortMicro(isortQSM, sRand[i], compInteger);
 
-        ISorter<int>* isort6 = new QuickSorterM<int>();
-        auto start6 = chrono::steady_clock::now();
-        s6 = isort6->Sorter(v1[i], compInteger);
-        auto end6 = chrono::steady_clock::now();
-        chrono::duration<double, micro> duration6 = end6 - start6;
-        double time6 = duration6.count();
+        ISorter<int>* isortHS = new HeapSorter<int>();
+        double timeHS = timeSortMicro(isortHS, sRand[i], compInteger);
 
-        auto start7 = chrono::steady_clock::now();
-        s7 = CountingSort(v2[i], size[i]);
-        auto end7 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration7 = end7 - start7;
-        double time7 = duration7.count();
+        ISorter<int>* isortSelS = new SelectionSorter<int>();
+        double timeSelS = timeSortMilli(isortSelS, sRand[i], compInteger);
 
-        fout << time1 << ";" << time2 << ";" << time3 << ";" << time4 << ";" << time5 << ";" << time6 << ";" << time7 << endl;
+        ISorter<int>* isortShellS = new ShellSorter<int>();
+        double timeShellS = timeSortMicro(isortShellS, sRand[i], compInteger);
+
+        double timeCountS = timeSortCounting(sRandPair[i], v[i]);
+
+        file1 << sizes[i] << " " << timeMS << " " << timeHS << " " << timeQSM <<  " " << timeShellS << " " << timeIS << endl;
+
+        file2 << sizes[i] << " " << timeBS << " " << " " << timeSelS << " " << timeQSR << " " << timeQSL  << " " << timeCountS << endl;
+
+        delete isortBS;
+        delete isortMS;
+        delete isortHS;
+        delete isortIS;
+        delete isortSelS;
+        delete isortShellS;
+        delete isortQSL;
+        delete isortQSM;
+        delete isortQSR;
+        delete sRand[i];
+        delete sRandPair[i];
+        delete v[i];
     }
-    //fin.close();
+
+    FILE *gnuplotP = popen("gnuplot -persist", "w");
+    if (gnuplotP)
+    {
+        fprintf(gnuplotP, "set encoding utf8\n");
+        fprintf(gnuplotP, "set terminal windows\n");
+        fprintf(gnuplotP, "set output \"plotTime.pdf\" \n");
+        fprintf(gnuplotP, "set multiplot\n");
+        fprintf(gnuplotP, "set xlabel 'Size of sequence'\n");
+        fprintf(gnuplotP, "set ylabel 'Time (in ms)'\n");
+        fprintf(gnuplotP, "set title 'Time of sorting of sorted sequences'\n");
+        fprintf(gnuplotP, "plot \"n2.txt\"  using 1:2 w lines lc rgb \"blue\" title \"Bubble sort\", '' using 1:3 w lines lc rgb \"black\" title \"Selection sort\", '' using 1:4 w lines lc rgb \"red\" title \"Quick sort (right)\", '' using 1:5 w lines lc rgb \"green\" title \"Quick sort (left)\", '' using 1:6 w lines lc rgb \"yellow\" title  \"Counting sort\" \n");
+        fprintf(gnuplotP, "unset multiplot\n");
+        fflush(gnuplotP);
+        fprintf(gnuplotP,"exit \n");
+        pclose(gnuplotP);
+    }
+
+    FILE *gnuplotP2 = popen("gnuplot -persist", "w");
+    if (gnuplotP2)
+    {
+        fprintf(gnuplotP2, "set encoding utf8\n");
+        fprintf(gnuplotP2, "set terminal windows\n");
+        fprintf(gnuplotP2, "set output \"plotTime2.pdf\" \n");
+        fprintf(gnuplotP2, "set multiplot\n");
+        fprintf(gnuplotP2, "set xlabel 'Size of sequence'\n");
+        fprintf(gnuplotP2, "set ylabel 'Time (in mcs)'\n");
+        fprintf(gnuplotP2, "set title 'Time of sorting of sorted sequences'\n");
+        fprintf(gnuplotP2, "plot \"nlogn.txt\"  using 1:2 w lines lc rgb \"blue\" title \"Merge sort\", '' using 1:3 w lines lc rgb \"red\" title \"Heap sort\", '' using 1:4 w lines lc rgb \"green\" title \"Quick sort (middle)\", '' using 1:5 w lines lc rgb \"black\" title \"Shell sort\", '' using 1:6 w lines lc rgb \"orange\" title \"Insertion sort\" \n");
+        fprintf(gnuplotP2, "unset multiplot\n");
+        fflush(gnuplotP2);
+        fprintf(gnuplotP2,"exit \n");
+        pclose(gnuplotP2);
+    }
+
 }
 
 void ReverseBenchmark()
 {
-    vector<Sequence<int>*> v1;
-    vector<Sequence<pair<int, int>>*> v2;
-    pair<int, int> p;
-    int r;
+    vector<Sequence<int>*> sRand;
+    vector<Sequence<pair<int, int>>*> sRandPair;
+    vector<vector<int>*> v;
+
+    pair<int, int> p1;
+
     for (int i = 0; i < n; i++)
     {
-        v1.push_back((Sequence<int>*)new ArraySequence<int>(size[i]));
-        v2.push_back((Sequence<pair<int, int>>*)new ArraySequence<int>(size[i]));
-        for (int j = 0; j < size[i]; j++)
+        sRand.push_back((Sequence<int>*)new ArraySequence<int>(sizes[i]));
+        sRandPair.push_back((Sequence<pair<int, int>>*)new ArraySequence<pair<int, int>>(sizes[i]));
+        v.push_back(new vector<int>);
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < sizes[i]; j++)
         {
-            v1[i]->Append(size[i] - j);
-            p.first = size[i] - j; p.second = size[i] - j;
-            v2[i]->Append(p);
+            v[i]->push_back(sizes[i] - j);
+            p1.first = sizes[i] - j;
+            p1.second = sizes[i] - j;
+            sRand[i]->Set(j, sizes[i] - j);
+            sRandPair[i]->Set(j, p1);
         }
     }
-    ofstream fout("timeReverse.csv");
+
+    ofstream file1("nlogn.txt");
+    ofstream file2("n2.txt");
+
     for (int i = 0; i < n; i++)
     {
-        Sequence<int>* s1 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s2 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s3 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s4 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s5 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s6 = (Sequence<int>*)new ArraySequence<int>(size[i]);
-        Sequence<int>* s7 = (Sequence<int>*)new ArraySequence<int>(size[i]);
+        ISorter<int>* isortBS = new BubbleSorter<int>();
+        double timeBS = timeSortMilli(isortBS, sRand[i], compInteger);
 
-        ISorter<int>* isort1 = new BubbleSorter<int>();
-        auto start1 = chrono::steady_clock::now();
-        s1 = isort1->Sorter(v1[i], compInteger);
-        auto end1 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration1 = end1 - start1;
-        double time1 = duration1.count();
+        ISorter<int>* isortIS = new InsertionSorter<int>();
+        double timeIS = timeSortMicro(isortIS, sRand[i], compInteger);
 
-        ISorter<int>* isort2 = new InsertionSorter<int>();
-        auto start2 = chrono::steady_clock::now();
-        s2 = isort2->Sorter(v1[i], compInteger);
-        auto end2 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration2 = end2 - start2;
-        double time2 = duration2.count();
+        ISorter<int>* isortMS = new MergeSorter<int>();
+        double timeMS = timeSortMicro(isortMS, sRand[i], compInteger);
 
-        ISorter<int>* isort3 = new MergeSorter<int>();
-        auto start3 = chrono::steady_clock::now();
-        s3 = isort3->Sorter(v1[i], compInteger);
-        auto end3 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration3 = end3 - start3;
-        double time3 = duration3.count();
+        ISorter<int>* isortQSL = new QuickSorterLeft<int>();
+        double timeQSL = timeSortMilli(isortQSL, sRand[i], compInteger);
 
-        ISorter<int>* isort4 = new QuickSorter<int>();
-        auto start4 = chrono::steady_clock::now();
-        s4 = isort4->Sorter(v1[i], compInteger);
-        auto end4 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration4 = end4 - start4;
-        double time4 = duration4.count();
+        ISorter<int>* isortQSR = new QuickSorterRight<int>();
+        double timeQSR = timeSortMilli(isortQSR, sRand[i], compInteger);
 
-        ISorter<int>* isort5 = new QuickSorterF<int>();
-        auto start5 = chrono::steady_clock::now();
-        s5 = isort5->Sorter(v1[i], compInteger);
-        auto end5 = chrono::steady_clock::now();
-        chrono::duration<double, micro> duration5 = end5 - start5;
-        double time5 = duration5.count();
+        ISorter<int>* isortQSM = new QuickSorterMiddle<int>();
+        double timeQSM = timeSortMicro(isortQSM, sRand[i], compInteger);
 
-        ISorter<int>* isort6 = new QuickSorterM<int>();
-        auto start6 = chrono::steady_clock::now();
-        s6 = isort6->Sorter(v1[i], compInteger);
-        auto end6 = chrono::steady_clock::now();
-        chrono::duration<double, micro> duration6 = end6 - start6;
-        double time6 = duration6.count();
+        ISorter<int>* isortHS = new HeapSorter<int>();
+        double timeHS = timeSortMicro(isortHS, sRand[i], compInteger);
 
-        auto start7 = chrono::steady_clock::now();
-        s7 = CountingSort(v2[i], size[i]);
-        auto end7 = chrono::steady_clock::now();
-        chrono::duration<double, milli> duration7 = end7 - start7;
-        double time7 = duration7.count();
+        ISorter<int>* isortSelS = new SelectionSorter<int>();
+        double timeSelS = timeSortMilli(isortSelS, sRand[i], compInteger);
 
-        fout << time1 << ";" << time2 << ";" << time3 << ";" << time4 << ";" << time5 << ";" << time6 << ";" << time7 << endl;
+        ISorter<int>* isortShellS = new ShellSorter<int>();
+        double timeShellS = timeSortMicro(isortShellS, sRand[i], compInteger);
+
+        double timeCountS = timeSortCounting(sRandPair[i], v[i]);
+
+        file1 << sizes[i] << " " << timeMS << " " << timeHS << " " << timeQSM <<  " " << timeShellS << " " << timeIS << endl;
+
+        file2 << sizes[i] << " " << timeBS << " " << " " << timeSelS << " " << timeQSR << " " << timeQSL << " " << timeCountS << endl;
+
+        delete isortBS;
+        delete isortMS;
+        delete isortHS;
+        delete isortIS;
+        delete isortSelS;
+        delete isortShellS;
+        delete isortQSL;
+        delete isortQSM;
+        delete isortQSR;
+        delete sRand[i];
+        delete sRandPair[i];
+        delete v[i];
+
     }
+
+    FILE *gnuplotP = popen("gnuplot -persist", "w");
+    if (gnuplotP)
+    {
+        fprintf(gnuplotP, "set encoding utf8\n");
+        fprintf(gnuplotP, "set terminal windows\n");
+        fprintf(gnuplotP, "set output \"plotTime.pdf\" \n");
+        fprintf(gnuplotP, "set multiplot\n");
+        fprintf(gnuplotP, "set xlabel 'Size of sequence'\n");
+        fprintf(gnuplotP, "set ylabel 'Time (in ms)'\n");
+        fprintf(gnuplotP, "set title 'Time of sorting sequences with reverse order'\n");
+//        fprintf(gnuplotP, "set xrange [*:*]\n");
+//        fprintf(gnuplotP, "set yrange [*:*]\n");
+//        fprintf(gnuplotP, "plot \"nlogn.txt\"  using 1:2 w lines title \'Merge sort\', '' using 1:3 w lines title \'Heap sort\', '' using 1:4 w lines title \'Quick sort (right)\', '' using 1:5 w lines title \'Quick sort (left)\', '' using 1:6 lines title \'Quick sort (middle)\' \n");
+        fprintf(gnuplotP, "plot \"n2.txt\"  using 1:2 w lines lc rgb \"blue\" title \"Bubble sort\", '' using 1:3 w lines lc rgb \"black\" title \"Selection sort\", '' using 1:4 w lines lc rgb \"red\" title \"Quick sort (right)\", '' using 1:5 w lines lc rgb \"green\" title \"Quick sort (left)\", '' using 1:6 w lines lc rgb \"yellow\" title  \"Counting sort\" \n");
+//        fprintf(gnuplotP, "plot \"nlogn.txt\"  using 1:2 w lines title \"Merge sort\", '' using 1:3 w lines title \"Heap sort\", '' using 1:6 w lines title \"Quick sort (middle)\" \n");
+//        fprintf(gnuplotP, "plot \"nlogn.txt\"  using 1:2 w lines title \"Merge sort\", '' using 1:3 w lines title \"Heap sort\", '' using 1:4 w lines title \"Quick sort\" \n");
+        fprintf(gnuplotP, "unset multiplot\n");
+        fflush(gnuplotP);
+        fprintf(gnuplotP,"exit \n");
+        pclose(gnuplotP);
+    }
+
+    FILE *gnuplotP2 = popen("gnuplot -persist", "w");
+    if (gnuplotP2)
+    {
+        fprintf(gnuplotP2, "set encoding utf8\n");
+        fprintf(gnuplotP2, "set terminal windows\n");
+        fprintf(gnuplotP2, "set output \"plotTime2.pdf\" \n");
+        fprintf(gnuplotP2, "set multiplot\n");
+        fprintf(gnuplotP2, "set xlabel 'Size of sequence'\n");
+        fprintf(gnuplotP2, "set ylabel 'Time (in mcs)'\n");
+        fprintf(gnuplotP2, "set title 'Time of sorting sequences with reverse order'\n");
+        fprintf(gnuplotP2, "plot \"nlogn.txt\"  using 1:2 w lines lc rgb \"blue\" title \"Merge sort\", '' using 1:3 w lines lc rgb \"red\" title \"Heap sort\", '' using 1:4 w lines lc rgb \"green\" title \"Quick sort (middle)\", '' using 1:5 w lines lc rgb \"black\" title \"Shell sort\", '' using 1:6 w lines lc rgb \"orange\" title \"Insertion sort\" \n");
+        fprintf(gnuplotP2, "unset multiplot\n");
+        fflush(gnuplotP2);
+        fprintf(gnuplotP2,"exit \n");
+        pclose(gnuplotP2);
+    }
+
 }
+
+
 
 #endif // BENCHMARK_H_INCLUDED

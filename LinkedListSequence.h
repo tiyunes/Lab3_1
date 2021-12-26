@@ -113,7 +113,10 @@ public:
 
     ~LinkedListSequence()
     {
-        delete[] this->items;
+        if (this->items != nullptr)
+        {
+            delete this->items;
+        }
     }
 protected:
 

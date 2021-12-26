@@ -186,7 +186,10 @@ void DynamicArray<T>::Reverse()
 template<class T>
 DynamicArray<T>::~DynamicArray()
 {
-    delete[] this->values;
+    if (this->values != nullptr)
+    {
+        delete this->values;
+    }
 }
 
 #endif // DYNAMICARRAY_H
